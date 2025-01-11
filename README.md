@@ -71,6 +71,8 @@ class Estacionamento {
 
     class Ticket {
         + Ticket(Veiculo veiculo)
+        + isPago() boolean
+        + getValorPago() double
     }
     
 
