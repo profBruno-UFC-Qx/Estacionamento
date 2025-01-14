@@ -78,10 +78,8 @@ class Estacionamento {
     
 
     class Veiculo {
-        - String identificador
         + Veiculo(String identificador)
         + String getIdentificador()
-        + double calcularValor(long minutos)
     }
     
     class TipoVaga {
