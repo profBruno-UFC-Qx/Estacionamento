@@ -142,12 +142,12 @@ jobs:
           max-score: 5
 
       # Teste 13: Deve calcular valor para carros com permanência longa
-      - name: Deve calcular valor para carros com permanência longa
+      - name: Deve calcular valor para bikes com permanência longa
         id: valor-carro-permanencia-longa
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Deve calcular valor para carros com permanência longa
-          command: gradle test --tests 'EstacionamentoTest.deveCalcularValorParaCarrosComPermanenciaLonga'
+          test-name: Deve calcular valor para bikes com permanência longa
+          command: gradle test --tests 'EstacionamentoTest.deveCalcularValorParaBikesComPermanenciaLonga'
           timeout: 10
           max-score: 5
 
