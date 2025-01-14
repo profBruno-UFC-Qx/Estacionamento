@@ -1,5 +1,6 @@
 package br.ufc.quixada.poo;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Estacionamento {
     return false;
   }
 
-  public boolean registrarSaida(String identificador, int minutosPassados) {
+  public boolean registrarSaida(String identificador, LocalDateTime horaDeSaida) {
     return false;
   }
 

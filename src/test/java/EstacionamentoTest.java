@@ -1,6 +1,8 @@
 import br.ufc.quixada.poo.*;
 import org.junit.jupiter.api.*;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EstacionamentoTest {
@@ -52,8 +54,8 @@ class EstacionamentoTest {
     Veiculo moto = new Moto("MOTO001");
     estacionamento.registrarEntrada(moto);
 
-    estacionamento.registrarSaida("MOTO001", 5);
     Ticket ticket = estacionamento.getTicketBy("MOTO001");
+    estacionamento.registrarSaida("MOTO001", ticket.getHoraEntrada().plusMinutes(1));
 
     assertNotNull(ticket);
     assertEquals(3.0, ticket.getValorPago(), 0.01);
@@ -64,18 +66,18 @@ class EstacionamentoTest {
     Veiculo carro = new Carro("CAR001");
     estacionamento.registrarEntrada(carro);
 
-    estacionamento.registrarSaida("CAR001", 10);
     Ticket ticket = estacionamento.getTicketBy("CAR001");
+    estacionamento.registrarSaida("CAR001", ticket.getHoraEntrada().plusMinutes(10));
 
     assertNotNull(ticket);
-    assertTrue(ticket.getValorPago() >= 5.0);
+    assertTrue(ticket.getValorPago() == 5.0);
   }
 
   @Test
   void deveLiberarVagaAposPagamento() {
     Veiculo carro = new Carro("CAR001");
     estacionamento.registrarEntrada(carro);
-    estacionamento.registrarSaida("CAR001", 120);
+    estacionamento.registrarSaida("CAR001", LocalDateTime.now());
     assertEquals(2, estacionamento.vagasDisponiveisPara(TipoVaga.CARRO));
   }
 
@@ -94,26 +96,26 @@ class EstacionamentoTest {
     Veiculo carro = new Carro("CAR001");
     estacionamento.registrarEntrada(carro);
 
-    estacionamento.registrarSaida("CAR001", 300);
     Ticket ticket = estacionamento.getTicketBy("CAR001");
+    estacionamento.registrarSaida("CAR001", ticket.getHoraEntrada().plusHours(5));
 
     assertNotNull(ticket);
     assertTrue(ticket.isPago());
-    assertTrue(ticket.getValorPago() >= 5.0);
+    assertEquals(30.0, ticket.getValorPago(), 0.01);
   }
 
   @Test
   void naoDevePermitirPagamentoDeTicketInexistente() {
-    assertFalse(estacionamento.registrarSaida("INVALID001", 120),"Ticket não encontrado para o identificador: INVALID001");
+    assertFalse(estacionamento.registrarSaida("INVALID001", LocalDateTime.now()),"Ticket não encontrado para o identificador: INVALID001");
   }
 
   @Test
   void naoDevePermitirRegistrarSaidaJaPago() {
     Veiculo carro = new Carro("CAR001");
     estacionamento.registrarEntrada(carro);
-    estacionamento.registrarSaida("CAR001", 120);
+    estacionamento.registrarSaida("CAR001", LocalDateTime.now());
 
-    assertFalse(estacionamento.registrarSaida("CAR001", 120),"Ticket já foi pago.");
+    assertFalse(estacionamento.registrarSaida("CAR001", LocalDateTime.now()),"Ticket já foi pago.");
 
   }
 
@@ -121,7 +123,7 @@ class EstacionamentoTest {
   void devePoderVoltarAposPagamento() {
     Veiculo carro = new Carro("CAR001");
     estacionamento.registrarEntrada(carro);
-    estacionamento.registrarSaida("CAR001", 120);
+    estacionamento.registrarSaida("CAR001", LocalDateTime.now());
     assertEquals(2, estacionamento.vagasDisponiveisPara(TipoVaga.CARRO));
     assertTrue(estacionamento.registrarEntrada(carro), "Um veiculo pode estacionar varias vezes durante o dia");
 
@@ -133,7 +135,7 @@ class EstacionamentoTest {
     estacionamento.registrarEntrada(carro);
 
     Ticket ticket = estacionamento.getTicketBy("CAR001");
-    estacionamento.registrarSaida("CAR001", 120);
+    estacionamento.registrarSaida("CAR001", ticket.getHoraEntrada().plusMinutes(120));
 
     assertEquals(12.0, ticket.getValorPago(), 0.01);
   }
@@ -144,7 +146,7 @@ class EstacionamentoTest {
     estacionamento.registrarEntrada(moto);
 
     Ticket ticket = estacionamento.getTicketBy("MOTO001");
-    estacionamento.registrarSaida("MOTO001", 30);
+    estacionamento.registrarSaida("MOTO001", ticket.getHoraEntrada().plusMinutes(30));
 
     assertEquals(3.0, ticket.getValorPago(), 0.01);  // Mínimo de 3 reais
   }

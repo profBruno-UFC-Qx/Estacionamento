@@ -16,5 +16,9 @@ public class Ticket {
   public boolean isPago() {
     return false;
   }
+
+  public LocalDateTime getHoraEntrada() {
+    return null;
+  }
 }
 

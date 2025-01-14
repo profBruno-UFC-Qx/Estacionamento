@@ -1,5 +1,7 @@
 package br.ufc.quixada.poo;
 
+import java.time.LocalDateTime;
+
 public class Main {
   public static void main(String[] args) {
     Estacionamento estacionamento = new Estacionamento(2, 3);
@@ -17,9 +19,9 @@ public class Main {
     estacionamento.listarVeiculosEstacionados();
 
     // Pagar tickets
-    estacionamento.registrarSaida("CAR001", 20);
-    estacionamento.registrarSaida("MOTO001", 120);
-    estacionamento.registrarSaida("BIKE001", 300);
+    estacionamento.registrarSaida("CAR001", LocalDateTime.now().plusMinutes(20));
+    estacionamento.registrarSaida("MOTO001", LocalDateTime.now().plusHours(2));
+    estacionamento.registrarSaida("BIKE001", LocalDateTime.now().plusMinutes(5));
 
     // Listar veículos novamente
     estacionamento.listarVeiculosEstacionados();

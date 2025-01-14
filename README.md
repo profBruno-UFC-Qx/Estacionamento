@@ -28,9 +28,9 @@ Cada tipo de veículo tem uma forma diferente de calcular o valor a pagar, que d
 
 1. O sistema deve permitir que um veículo saia do estacionamento.
 2. Ao pagar o ticket:
-    1. O horário de saída é registrado.
-    2. O sistema calcula o valor a ser pago, com base no tempo de permanência.
-    3. O ticket é marcado como pago.
+   1. O horário de saída é registrado.
+   2. O sistema calcula o valor a ser pago, com base no tempo de permanência.
+   3. O ticket é marcado como pago.
 
 ---
 
@@ -49,10 +49,10 @@ Cada tipo de veículo tem sua própria regra de cálculo:
 
 1. O sistema deve ser capaz de fornecer uma lista de todos os veículos que estão atualmente estacionados.
 2. Para cada veículo, exibir:
-    - Identificador (placa)
-    - Tipo de veículo
-    - Horário de entrada
-    - Status do pagamento do ticket (pago ou não).
+   - Identificador (placa)
+   - Tipo de veículo
+   - Horário de entrada
+   - Status do pagamento do ticket (pago ou não).
 
 ---
 
@@ -64,13 +64,14 @@ classDiagram
 class Estacionamento {
 + Estacionamento(int vagasCarro, int vagasMotoBike)
 + boolean registrarEntrada(Veiculo veiculo)
-+ boolean resgistraSaida(String identificador)
++ boolean resgistraSaida(String identificador, LocalDateTime horaDeSaida)
 + void listarVeiculosEstacionados()
-+ int vagasDisponiveisPara(String tipoVeiculo)
++ int vagasDisponiveisPara(TipoVaga tipoVeiculo)
 }
 
     class Ticket {
         + Ticket(Veiculo veiculo)
+        + getHoraDeEntrada() LocalDateTime
         + isPago() boolean
         + getValorPago() double
     }
@@ -110,11 +111,11 @@ estacionamento.registrarEntrada(new Carro("ABC-1234")); // OK
 estacionamento.registrarEntrada(new Moto("XYZ-9876"));  // OK
 
 // Tentar registrar mais veículos do que o limite de vagas
-for (int i = 0; i < 6; i++) {
-estacionamento.registrarEntrada(new Carro("CARRO-" + i));
-}
+        for (int i = 0; i < 6; i++) {
+        estacionamento.registrarEntrada(new Carro("CARRO-" + i));
+        }
 // Saída esperada: "Vaga indisponível para o tipo de veículo Carro."
 
 // Pagar ticket
-estacionamento.registrarSaida("ABC-1234");
+estacionamento.registrarSaida("ABC-1234", LocalDateTime.now());
 ```
