@@ -21,7 +21,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Teste 1: Deve registrar entrada de carro
+      # Testes automatizados
       - name: Deve registrar entrada de carro
         id: registrar-entrada-carro
         uses: classroom-resources/autograding-command-grader@v1
@@ -31,7 +31,6 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 2: Deve registrar entrada de moto e bike
       - name: Deve registrar entrada de moto e bike
         id: registrar-entrada-moto-bike
         uses: classroom-resources/autograding-command-grader@v1
@@ -41,7 +40,6 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 3: Não deve permitir veículos duplicados
       - name: Não deve permitir veículos duplicados
         id: nao-permitir-veiculos-duplicados
         uses: classroom-resources/autograding-command-grader@v1
@@ -51,7 +49,6 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 4: Não deve registrar entrada quando estacionamento lotado
       - name: Não deve registrar entrada quando estacionamento lotado
         id: estacionamento-lotado
         uses: classroom-resources/autograding-command-grader@v1
@@ -61,7 +58,6 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 5: Deve calcular valor de moto com mínimo de 3 reais
       - name: Deve calcular valor de moto com mínimo de 3 reais
         id: calcular-valor-moto
         uses: classroom-resources/autograding-command-grader@v1
@@ -71,7 +67,6 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 6: Deve calcular valor de carro com mínimo de 5 reais
       - name: Deve calcular valor de carro com mínimo de 5 reais
         id: calcular-valor-carro
         uses: classroom-resources/autograding-command-grader@v1
@@ -81,7 +76,6 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 7: Deve liberar vaga após pagamento
       - name: Deve liberar vaga após pagamento
         id: liberar-vaga-pagamento
         uses: classroom-resources/autograding-command-grader@v1
@@ -91,7 +85,6 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 8: Deve listar veículos estacionados
       - name: Deve listar veículos estacionados
         id: listar-veiculos
         uses: classroom-resources/autograding-command-grader@v1
@@ -101,7 +94,6 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 9: Deve registrar saída e calcular valor corretamente
       - name: Deve registrar saída e calcular valor corretamente
         id: registrar-saida-calculo
         uses: classroom-resources/autograding-command-grader@v1
@@ -111,7 +103,6 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 10: Não deve permitir pagamento de ticket inexistente
       - name: Não deve permitir pagamento de ticket inexistente
         id: pagamento-ticket-inexistente
         uses: classroom-resources/autograding-command-grader@v1
@@ -121,19 +112,17 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 11: Não deve permitir registrar saída já pago
-      - name: Não deve permitir registrar saída já pago
-        id: saida-ja-pago
+      - name: Não deve permitir registrar saída já paga
+        id: nao-permitir-saida-paga
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Não deve permitir registrar saída já pago
+          test-name: Não deve permitir registrar saída já paga
           command: gradle test --tests 'EstacionamentoTest.naoDevePermitirRegistrarSaidaJaPago'
           timeout: 10
           max-score: 5
 
-      # Teste 12: Deve poder voltar após pagamento
       - name: Deve poder voltar após pagamento
-        id: voltar-pos-pagamento
+        id: poder-voltar-apos-pagamento
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Deve poder voltar após pagamento
@@ -141,9 +130,8 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 13: Deve calcular valor para carros com permanência longa
-      - name: Deve calcular valor para bikes com permanência longa
-        id: valor-carro-permanencia-longa
+      - name: Deve calcular valor para carros com permanência longa
+        id: calcular-valor-permanencia-longa
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Deve calcular valor para bikes com permanência longa
@@ -151,9 +139,8 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 14: Deve calcular valor para motos com permanência curta
       - name: Deve calcular valor para motos com permanência curta
-        id: valor-moto-permanencia-curta
+        id: calcular-valor-permanencia-curta
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Deve calcular valor para motos com permanência curta
@@ -161,9 +148,8 @@ jobs:
           timeout: 10
           max-score: 5
 
-      # Teste 15: Deve impedir registrar entrada de veículos quando estacionamento lotado
       - name: Deve impedir registrar entrada de veículos quando estacionamento lotado
-        id: impedir-entrada-estacionamento-lotado
+        id: impedir-entrada-lotado
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Deve impedir registrar entrada de veículos quando estacionamento lotado
@@ -176,6 +162,19 @@ jobs:
         uses: classroom-resources/autograding-grading-reporter@v1
         env:
           REGISTRAR-ENTRADA-CARRO_RESULTS: "${{steps.registrar-entrada-carro.outputs.result}}"
-          # Inclua os demais resultados aqui...
+          REGISTRAR-ENTRADA-MOTO-BIKE_RESULTS: "${{steps.registrar-entrada-moto-bike.outputs.result}}"
+          NAO-PERMITIR-VEICULOS-DUPLICADOS_RESULTS: "${{steps.nao-permitir-veiculos-duplicados.outputs.result}}"
+          ESTACIONAMENTO-LOTADO_RESULTS: "${{steps.estacionamento-lotado.outputs.result}}"
+          CALCULAR-VALOR-MOTO_RESULTS: "${{steps.calcular-valor-moto.outputs.result}}"
+          CALCULAR-VALOR-CARRO_RESULTS: "${{steps.calcular-valor-carro.outputs.result}}"
+          LIBERAR-VAGA-PAGAMENTO_RESULTS: "${{steps.liberar-vaga-pagamento.outputs.result}}"
+          LISTAR-VEICULOS_RESULTS: "${{steps.listar-veiculos.outputs.result}}"
+          REGISTRAR-SAIDA-CALCULO_RESULTS: "${{steps.registrar-saida-calculo.outputs.result}}"
+          PAGAMENTO-TICKET-INEXISTENTE_RESULTS: "${{steps.pagamento-ticket-inexistente.outputs.result}}"
+          NAO-PERMITIR-SAIDA-PAGA_RESULTS: "${{steps.nao-permitir-saida-paga.outputs.result}}"
+          PODER-VOLTAR-APOS-PAGAMENTO_RESULTS: "${{steps.poder-voltar-apos-pagamento.outputs.result}}"
+          CALCULAR-VALOR-PERMANENCIA-LONGA_RESULTS: "${{steps.calcular-valor-permanencia-longa.outputs.result}}"
+          CALCULAR-VALOR-PERMANENCIA-CURTA_RESULTS: "${{steps.calcular-valor-permanencia-curta.outputs.result}}"
+          IMPEDIR-ENTRADA-LOTADO_RESULTS: "${{steps.impedir-entrada-lotado.outputs.result}}"
         with:
-          runners: registrar-entrada-carro,...
+          runners: registrar-entrada-carro,registrar-entrada-moto-bike,nao-permitir-veiculos-duplicados,estacionamento-lotado,calcular-valor-moto,calcular-valor-carro,liberar-vaga-pagamento,listar-veiculos,registrar-saida-calculo,pagamento-ticket-inexistente,nao-permitir-saida-paga,poder-voltar-apos-pagamento,calcular-valor-permanencia-longa,calcular-valor-permanencia-curta,impedir-entrada-lotado
